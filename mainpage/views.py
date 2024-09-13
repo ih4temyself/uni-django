@@ -6,7 +6,7 @@ from django.shortcuts import render
 
 def christmas_checker(request):
     today = datetime.date.today()
-    christmas = today.day == 25 and today.month == 9
+    christmas = today.day == 25 and today.month == 12
     data = {"today": christmas}
     return render(request, "home.html", data)
 
