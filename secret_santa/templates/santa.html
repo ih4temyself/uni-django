@@ -1,11 +1,61 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/mainpage.css' %}">
+    <title>Secret santa</title>
+    <script>
+        function validateForm() {
+            const name = document.getElementById("id_name").value;
+            if (name.trim() === "") {
+                alert("Name cannot be empty.");
+                return false;
+            }
+            return true;
+        }
+    </script>
 </head>
 <body>
-    
+    <h1>Secret santa</h1>
+    <form method="post" onsubmit="return validateForm()">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" name="add">Add player</button>
+    </form>
+
+    <h2>players</h2>
+    <ul>
+        {% for participant in participants %}
+            <li>{{ participant }}</li>
+        {% empty %}
+            <li>no players yet</li>
+        {% endfor %}
+    </ul>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" name="generate">generate pairs</button>
+    </form>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" name="reset">reset</button>
+    </form>
+
+    {% if error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
+
+    {% if pairs %}
+    <h2>couples</h2>
+    <ul>
+        {% for giver, receiver in pairs.items %}
+            <li>{{ giver }} -> {{ receiver }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
 </body>
 </html>
