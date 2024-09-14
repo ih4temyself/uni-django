@@ -26,6 +26,10 @@
         <button type="submit" name="add">Add player</button>
     </form>
 
+    {% if error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
+
     <h2>players</h2>
     <ul>
         {% for participant in participants %}
@@ -45,10 +49,6 @@
         <button type="submit" name="reset">reset</button>
     </form>
 
-    {% if error_message %}
-        <p style="color: red;">{{ error_message }}</p>
-    {% endif %}
-
     {% if pairs %}
     <h2>couples</h2>
     <ul>
@@ -57,5 +57,10 @@
         {% endfor %}
     </ul>
     {% endif %}
+
+    <form method = "post">
+        {% csrf_token %}
+        <button type="submit" name="go-back">go back</button> 
+    </form>
 </body>
 </html>

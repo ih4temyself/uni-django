@@ -34,7 +34,7 @@ def secret_santa(request):
             else:
                 form = ParticipantForm()
                 pairs = None
-                error_message = "players have to be even"
+                error_message = "the number of players must be even"
                 return render(
                     request,
                     "santa.html",
@@ -48,6 +48,9 @@ def secret_santa(request):
         elif "reset" in request.POST:
             request.session["participants"] = []
             return redirect("secret-santa")
+        elif "go-back" in request.POST:
+            request.session["participants"] = []
+            return redirect("homepage")
 
     else:
         form = ParticipantForm()
