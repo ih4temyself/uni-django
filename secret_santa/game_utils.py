@@ -6,14 +6,12 @@ def generate_pairs(participants):
         return None
 
     givers = participants.copy()
-    receivers = participants.copy()
-    random.shuffle(receivers)
+    random.shuffle(givers)
 
-    pairs = {}
-    for giver in givers:
-        for receiver in receivers:
-            if giver != receiver and receiver not in pairs.values():
-                pairs[giver] = receiver
-                receivers.remove(receiver)
-                break
+    receivers = givers[1:] + [givers[0]]  # moving 1 pos right
+
+    pairs = {
+        giver: receiver for giver, receiver in zip(givers, receivers)
+    }  # giver -reciever dict
+
     return pairs

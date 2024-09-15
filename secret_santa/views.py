@@ -45,6 +45,15 @@ def secret_santa(request):
                         "error_message": error_message,
                     },
                 )
+            return render(
+                request,
+                "santa.html",
+                {
+                    "form": ParticipantForm(),
+                    "participants": participants,
+                    "pairs": pairs,
+                },
+            )
         elif "reset" in request.POST:
             request.session["participants"] = []
             return redirect("secret-santa")
