@@ -19,14 +19,12 @@ def secret_santa(request):
             if form.is_valid():
                 name = form.cleaned_data["name"]
                 participants.append(name)
+                request.session.modified = True
                 request.session["participants"] = participants
                 return redirect("secret-santa")
             else:
-                return render(
-                    request,
-                    "santa.html",
-                    {"form": form, "participants": participants, "pairs": pairs},
-                )
+                data = {"form": form, "participants": participants, "pairs": pairs}
+                return render(request, "santa.html", data)
 
         elif "generate" in request.POST:
             if len(participants) % 2 == 0:
@@ -35,16 +33,13 @@ def secret_santa(request):
                 form = ParticipantForm()
                 pairs = None
                 error_message = "the number of players must be even"
-                return render(
-                    request,
-                    "santa.html",
-                    {
-                        "form": form,
-                        "participants": participants,
-                        "pairs": pairs,
-                        "error_message": error_message,
-                    },
-                )
+                data = {
+                    "form": form,
+                    "participants": participants,
+                    "pairs": pairs,
+                    "error_message": error_message,
+                }
+                return render(request, "santa.html", data)
             return render(
                 request,
                 "santa.html",
