@@ -1,7 +1,6 @@
-# secret santa
+#Secret santa
 
-
-requirements to start:
+Requirements to start:
 
 - **Python 3.x** installed.
 - **pip** package manager.
@@ -19,10 +18,10 @@ Follow these steps to get a development environment up and running.
 
 2. **Create a virtual environment**
     ```python -m venv venv
-       source venv/bin/activate  # On Windows, use `venv\Scripts\activate (i guess)```
+       source venv/bin/activate  # On Windows, use `venv\Scripts\activate (i guess)
 
 4. **Install dependencies**
-   ```pip install -r requirements.txt```
+    ```pip install -r requirements.txt```
 
 
 **Running the Application**
