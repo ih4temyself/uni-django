@@ -27,12 +27,12 @@ def secret_santa(request):
                 return render(request, "santa.html", data)
 
         elif "generate" in request.POST:
-            if len(participants) % 2 == 0:
+            if len(participants) > 1:
                 pairs = generate_pairs(participants)
             else:
                 form = ParticipantForm()
                 pairs = None
-                error_message = "the number of players must be even"
+                error_message = "minimum 2 players"
                 data = {
                     "form": form,
                     "participants": participants,
