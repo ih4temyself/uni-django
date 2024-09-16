@@ -13,8 +13,8 @@ Follow these steps to get a development environment up and running.
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/yourusername/yourproject.git
-   cd yourproject```
+   git clone https://github.com/ih4temyself/uni-django
+   cd uni-django```
 
 2. **Create a virtual environment**
     ```python -m venv venv
