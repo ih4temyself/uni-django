@@ -1,0 +1,70 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+    <link rel="stylesheet" href="{% static 'css/secret_santa.css' %}">
+    <title>Secret Santa</title>
+    <script>
+        function validateForm() {
+            const name = document.getElementById("id_name").value;
+            if (name.trim() === "") {
+                alert("Name cannot be empty.");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="header-santa">
+            Secret Santa
+        </h1>
+
+        <section class="form-section">
+            <form class="input-field" method="post" onsubmit="return validateForm()">
+                {% csrf_token %}
+                {{ form.name}}
+                <button type="submit" name="add">Add Player</button>
+            </form>
+        </section>
+
+        {% if error_message %}
+            <p class="error-message">{{ error_message }}</p>
+        {% endif %}
+
+        <section class="participants-section">
+            {% if participants %}
+                <ul class="participants-list">
+                    {% for participant in participants %}
+                        <li class="participant-item">{{ participant }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="no-players-message">No players yet</p>
+            {% endif %}
+        </section>
+
+        <section class="actions-section">
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" name="generate">Generate Pairs</button>
+                <button type="submit" name="reset">Reset</button>
+                <button type="submit" name="go-back">Go Back</button>
+            </form>
+        </section>
+
+        {% if pairs %}
+            <section class="pairs-section">
+                <h2>Couples</h2>
+                <ul class="pairs-list">
+                    {% for giver, receiver in pairs.items %}
+                        <li>{{ giver }} → {{ receiver }}</li>
+                    {% endfor %}
+                </ul>
+            </section>
+        {% endif %}
+    </div>
+</body>
+</html>
