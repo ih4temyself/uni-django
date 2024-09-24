@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ news.title }} - newsSite{% endblock %}
+
+{% block content %}
+<h1>{{ news.title }}</h1>
+<p class="text-muted">
+    By <a href="{{ news.author.get_absolute_url }}">{{ news.author.name }}</a> on {{ news.publication_date|date:"F j, Y, g:i a" }}
+</p>
+<div>
+    {{ news.content|linebreaks }}
+</div>
+<a href="{% url 'news_list' %}" class="btn custom-btn mt-3">Back to All News</a>
+{% endblock %}

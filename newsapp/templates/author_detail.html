@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ author.name }} - newsSite{% endblock %}
+
+{% block content %}
+<h1>{{ author.name }}</h1>
+<p>{{ author.bio }}</p>
+
+<h2>News by {{ author.name }}</h2>
+{% for news in author.news.all|dictsort:"-publication_date" %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">
+                <a href="{{ news.get_absolute_url }}">{{ news.title }}</a>
+            </h5>
+            <h6 class="card-subtitle mb-2 text-muted">
+                Published on {{ news.publication_date|date:"F j, Y, g:i a" }}
+            </h6>
+            <p class="card-text">{{ news.get_short_content }}</p>
+        </div>
+    </div>
+{% empty %}
+    <p>No news available for this author.</p>
+{% endfor %}
+<a href="{% url 'author_news' author.id %}" class="btn btn-primary">View All News by {{ author.name }}</a>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}authors - newsSite{% endblock %}
+
+{% block content %}
+<h1>Authors</h1>
+<div class="list-group">
+    {% for author in authors %}
+        <a href="{{ author.get_absolute_url }}" class="list-group-item list-group-item-action">
+            <h5 class="mb-1">{{ author.name }}</h5>
+            <p class="mb-1">{{ author.bio|truncatewords:20 }}</p>
+        </a>
+    {% empty %}
+        <p>No authors available.</p>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Home - newsSite{% endblock %}
+
+{% block content %}
+<h1>Latest News</h1>
+{% for news in news_list %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">
+                <a href="{{ news.get_absolute_url }}">{{ news.title }}</a>
+            </h5>
+            <h6 class="card-subtitle mb-2 text-muted">
+                By <a href="{{ news.author.get_absolute_url }}">{{ news.author.name }}</a> on {{ news.publication_date|date:"F j, Y, g:i a" }}
+            </h6>
+            <p class="card-text">{{ news.get_short_content }}</p>
+        </div>
+    </div>
+{% empty %}
+    <p>No news available.</p>
+{% endfor %}
+<a href="{% url 'news_list' %}" class="btn btn-primary" style="background-color: #201C5F; border-color: #201C5F;">Read More</a>
+{% endblock %}
