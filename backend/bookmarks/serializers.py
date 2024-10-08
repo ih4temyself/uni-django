@@ -13,15 +13,12 @@ class BookmarkSerializer(serializers.ModelSerializer):
     category = CategorySerializer(read_only=True)
     category_id = serializers.PrimaryKeyRelatedField(
         queryset=Category.objects.all(),
-        write_only=True,
         required=False,
         allow_null=True,
     )
-
     category_name = serializers.CharField(
         write_only=True, required=False, allow_blank=True
     )
-    category_id_read = serializers.IntegerField(source="category.id", read_only=True)
 
     class Meta:
         model = Bookmark
@@ -32,7 +29,6 @@ class BookmarkSerializer(serializers.ModelSerializer):
             "category",
             "category_id",
             "category_name",
-            "category_id_read",
             "is_favorite",
         ]
 
@@ -52,10 +48,21 @@ class BookmarkSerializer(serializers.ModelSerializer):
         category_name = validated_data.pop("category_name", None)
         category = None
 
-        if category_name:
-            category, created = Category.objects.get_or_create(name=category_name)
-        else:
+        if category_name is not None:
+            if category_name.strip() == "":
+                validated_data["category"] = None
+            else:
+                category, created = Category.objects.get_or_create(name=category_name)
+                validated_data["category"] = category
+        elif "category_id" in validated_data:
             category = validated_data.pop("category_id", None)
+            validated_data["category"] = category
 
-        validated_data["category"] = category
         return super().update(instance, validated_data)
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation["category_id"] = (
+            instance.category.id if instance.category else None
+        )
+        return representation
