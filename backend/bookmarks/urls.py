@@ -7,5 +7,5 @@ router.register(r"bookmarks", BookmarkViewSet, basename="bookmark")
 router.register(r"categories", CategoryViewSet, basename="category")
 
 urlpatterns = [
-    path("api/", include(router.urls)),
+    path("", include(router.urls)),
 ]
