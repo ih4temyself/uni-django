@@ -14,6 +14,10 @@
         <router-link :to="`/edit/${bookmark.id}`" class="btn btn-secondary">Edit</router-link>
         <button @click="deleteBookmark(bookmark.id)" class="btn btn-danger ml-2">Delete</button>
       </div>
+
+      <div class="mt-4">
+        <button @click="navigateToBookmarkList()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">go back</button>
+      </div>
     </div>
 
     <div v-else>
@@ -60,6 +64,10 @@ export default {
       }
     }
 
+    const navigateToBookmarkList = () => {
+      router.push(`/`)
+    }
+
     onMounted(() => {
       fetchBookmark()
     })
@@ -68,6 +76,7 @@ export default {
       bookmark,
       loading,
       deleteBookmark,
+      navigateToBookmarkList
     }
   },
 }

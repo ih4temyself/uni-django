@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from .models import Bookmark, Category
@@ -7,6 +8,7 @@ from .serializers import BookmarkSerializer, CategorySerializer
 
 
 class BookmarkViewSet(viewsets.ModelViewSet):
+    permission_classes = [AllowAny]
     queryset = Bookmark.objects.all()
     serializer_class = BookmarkSerializer
 
@@ -17,5 +19,6 @@ class BookmarkViewSet(viewsets.ModelViewSet):
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
+    permission_classes = [AllowAny]
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
