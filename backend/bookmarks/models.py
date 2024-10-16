@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Model
 
@@ -10,6 +11,9 @@ class Category(Model):
 
 
 class Bookmark(Model):
+    user = models.ForeignKey(
+        User, null=True, blank=True, on_delete=models.SET_NULL, related_name="bookmarks"
+    )
     url = models.URLField()
     title = models.CharField(max_length=180)
     category = models.ForeignKey(

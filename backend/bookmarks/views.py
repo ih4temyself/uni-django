@@ -8,13 +8,13 @@ from .serializers import BookmarkSerializer, CategorySerializer
 
 
 class BookmarkViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]  
-    queryset = Bookmark.objects.all() 
+    permission_classes = [IsAuthenticated]
     serializer_class = BookmarkSerializer
+    queryset = Bookmark.objects.all()
 
     def get_queryset(self):
-        return Bookmark.objects.filter(user=self.request.user)
-    
+        return Bookmark.objects.all()
+
     def retrieve(self, request, pk=None):
         bookmark = get_object_or_404(self.queryset, pk=pk)
         serializer = self.get_serializer(bookmark)

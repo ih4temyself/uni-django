@@ -3,9 +3,9 @@
   <div id="app">
     <nav>
       <span v-if="isLoggedIn && user">Hello, {{ user.username }} </span>
-      <router-link v-if="!isLoggedIn" to="/login">Login</router-link>
+      <router-link v-if="!isLoggedIn" to="/login">Login </router-link>
       <router-link v-if="!isLoggedIn" to="/register">Register</router-link>
-      <button v-if="isLoggedIn" @click="logoutUser">Logout</button>
+      <button v-if="isLoggedIn" @click="logoutUser"> Logout</button>
     </nav>
     <router-view />
   </div>
