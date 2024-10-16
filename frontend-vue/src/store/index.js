@@ -1,8 +1,8 @@
-// src/store/index.js
-import { defineStore } from 'pinia'
-import api from '../services/api'
+// src/store/bookmarkStore.js
+import { defineStore } from 'pinia';
+import axios from 'axios';
 
-export const useBookmarkStore = defineStore('bookmarkStore', {
+export const useBookmarkStore = defineStore('bookmark', {
     state: () => ({
         bookmarks: [],
         categories: [],
@@ -10,31 +10,31 @@ export const useBookmarkStore = defineStore('bookmarkStore', {
     }),
     actions: {
         async fetchBookmarks() {
-            this.loading = true
+            this.loading = true;
             try {
-                const response = await api.get('bookmarks/')
-                this.bookmarks = response.data
+                const response = await axios.get('/api/bookmarks/');
+                this.bookmarks = response.data;
             } catch (error) {
-                console.error('Error fetching bookmarks:', error)
+                console.error('Failed to fetch bookmarks:', error);
             } finally {
-                this.loading = false
+                this.loading = false;
             }
         },
         async fetchCategories() {
             try {
-                const response = await api.get('categories/')
-                this.categories = response.data
+                const response = await axios.get('/api/categories/');
+                this.categories = response.data;
             } catch (error) {
-                console.error('Error fetching categories:', error)
+                console.error('Failed to fetch categories:', error);
             }
         },
         async deleteBookmark(id) {
             try {
-                await api.delete(`bookmarks/${id}/`)
-                this.bookmarks = this.bookmarks.filter(b => b.id !== id)
+                await axios.delete(`/api/bookmarks/${id}/`);
+                this.fetchBookmarks();
             } catch (error) {
-                console.error('Error deleting bookmark:', error)
+                console.error('Failed to delete bookmark:', error);
             }
         },
     },
-})
+});
